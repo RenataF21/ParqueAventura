@@ -1,0 +1,191 @@
+{# templates/dashboard.html #}
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard de parques</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0e9e9;
+        }
+
+        .container {
+            width: auto;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px #f0e9e9;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .welcome {
+            font-size: 24px;
+            color: #333;
+        }
+
+        .header-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .button {
+            padding: 8px 16px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: white;
+            color: #333;
+            text-decoration: none;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            background-color: #f5f5f5;
+        }
+
+        table {
+            width: auto;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th,
+        td {
+            padding: 12px;
+            border: 1px solid #dee2e6;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f8f9fa;
+        }
+
+        .action-link {
+            color: #0066cc;
+            text-decoration: none;
+            margin-right: 10px;
+        }
+
+        .flash-messages {
+            margin-bottom: 20px;
+        }
+
+        .flash-message {
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+        }
+
+        .flash-message.success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .flash-message.error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="welcome">¡Bienvenid@ {{ session.nombre }}!</div>
+            <div class="header-buttons">
+                <a href="{{ url_for('nueva') }}" class="button">Nueva Visita</a>
+                <a href="{{ url_for('cerrar_sesion') }}" class="button">Cerrar Sesión</a>
+            </div>
+        </div>
+
+        {# Mostrar mensajes flash #}
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        <div class="flash-messages">
+            {% for category, message in messages %}
+            <div class="flash-message {{ category }}">
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% endwith %}
+        <h1>Mis Visitas</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Parque</th>
+                    <th>Rating</th>
+                    <th>Fecha de Visita</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for visita in visitas %}
+                <tr>
+                    <td>{{ visitas.parque }}</td>
+                    <td>{{ visitas.rating }}</td>
+                    <td>{{ visitas.fecha_de_visita.strftime('%Y-%m-%d %H:%M') }}</td>
+                    <td>
+                        <a href="{{ url_for('ver_viaje', id=viaje.id_viaje) }}" class="action-link">Ver</a>
+                        {% if viaje.id_organizador == session.usuario_id %}
+                        <a href="{{ url_for('editar_viaje', id=viaje.id_viaje) }}" class="action-link">Editar</a>
+                        <a href="{{ url_for('eliminar_viaje', id=viaje.id_viaje) }}" class="action-link"
+                            onclick="return confirm('¿Estás seguro de querer eliminar este viaje?')">Borrar</a>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% else %}
+                {% endfor %}
+            </tbody>
+        </table>
+        <h1>Otras Visitas</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Parque</th>
+                    <th>Rating</th>
+                    <th>Fecha de Visita</th>
+                    <th>Visitante</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for visita in visitas %}
+                <tr>
+                    <td>{{ visitas.parque }}</td>
+                    <td>{{ visitas.rating }}</td>
+                    <td>{{ visitas.fecha_de_visita.strftime('%Y-%m-%d %H:%M') }}</td>
+                    <td>{{ visitas.usuario_id }}</td>
+                    <td>
+                        <a href="{{ url_for('ver_viaje', id=viaje.id_viaje) }}" class="action-link">Ver</a>
+                        {% if viaje.id_organizador == session.usuario_id %}
+                        <a href="{{ url_for('editar_viaje', id=viaje.id_viaje) }}" class="action-link">Editar</a>
+                        <a href="{{ url_for('eliminar_viaje', id=viaje.id_viaje) }}" class="action-link"
+                            onclick="return confirm('¿Estás seguro de querer eliminar este viaje?')">Borrar</a>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% else %}
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

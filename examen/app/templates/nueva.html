@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Nueva Visita </title>
+    <style>
+        .welcome {
+            font-size: 24px;
+            color: #333;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0e9e9;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px #f0e9e9;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        .header-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: end;
+        }
+        .button {
+            padding: 8px 16px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: white;
+            color: #333;
+            text-decoration: none;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        .button:hover {
+            background-color: #f5f5f5;
+        }
+        form {
+            width: auto;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid black;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 5px;
+            border: 1px solid black;
+        }
+        .alerta {
+            color: rgb(206, 24, 24);
+        }
+        </style>
+</head>
+<body>
+    <div class="container">
+        <div >
+        <header>
+        <div class="header-buttons">
+            <a href="{{ url_for('login') }}" class="button">Inicio</a>
+            <a href="{{ url_for('cerrar_sesion') }}" class="button">Cerrar Sesión</a>
+        </header>
+        <div>
+            <h2>Nueva Visita</h2>
+            <h4 class="alerta">Detalle no puede estar vacía</h4>
+            <form>
+                <label for="parque">Parque</label>
+                <input type="text" id="parque" name="parque" value="{{ visitas.parque }}">
+                <br>
+                <label for="fecha">Fecha de visita</label>
+                <input type="date" id="fecha_de_visita" name="fecha_de_visita" value="{{ visitas.fecha_de_visita }}">
+                <br>
+                <label for="rating">Rating:</label>
+                <input type="number" id="rating" name="rating" min="1" max="5" value="{{ visitas.rating }}">
+                <br>
+                <label for="detalles">Detalles:</label>
+                <textarea id="detalles" name="detalles" rows="4" cols="50"></textarea>
+                <br>
+                <button type="submit">Guardar</button>
+
+            </form>
+        </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ visitas_parque }}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0e9e9;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px #f0e9e9;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        .header-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        .button {
+            padding: 8px 16px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: white;
+            color: #333;
+            text-decoration: none;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        .button:hover {
+            background-color: #f5f5f5;
+        }
+        .cuadro {
+            width: auto;
+            height: auto;
+            background-color: white;
+            border: solid 1px black;
+            border-radius: 5px;
+            padding: 20px;
+            margin: 50px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-buttons">
+            <a href="{{ url_for('login') }}" class="button">Inicio</a>
+            <a href="{{ url_for('cerrar_sesion') }}" class="button">Cerrar Sesión</a>
+            </div>
+        <header>
+            <div class="cuadro">
+            <h2>{{ parques.nombre_parque }}</h2>
+            <p>Visitado por: {{ visitas.usuario_id }}</p>
+            <p>Fecha visita: {{ parques.fecha_de_visitas }}</p>
+            <p>Rating: {{ parque.rating }}</p>
+            <p>Detalles: {{ parque.detalles }}</p>
+            <button type="submit">Me gusta</button>
+        </form>
+        </div>
+
+        </div>
+    </div>
+</body>
+</html>
